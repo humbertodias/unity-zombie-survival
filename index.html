@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | unity-alura-zumbi</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" style="width: 960px; height: 540px; background: #231F20"></canvas>
+    <script src="Build/zumbi.loader.js"></script>
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/zumbi.data",
+        frameworkUrl: "Build/zumbi.framework.js",
+        codeUrl: "Build/zumbi.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "unity-alura-zumbi",
+        productVersion: "1.0",
+      });
+    </script>
+  </body>
+</html>
