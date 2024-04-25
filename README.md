@@ -1,5 +1,12 @@
 # Unity-alura-zumbi
 
-[Play](http://humbertodias.github.io/unity-alura-zumbi)
+Zombie survival game for the web
 
-[Releases](https://github.com/humbertodias/unity-alura-zumbi/releases)
+### How to play
+
+| Action   | Command    |
+| -------- | ---------- |
+| Shot     | Mouse Left |
+| Movement | WASD       |
+
+[Play](http://humbertodias.github.io/unity-alura-zumbi) | [Releases](https://github.com/humbertodias/unity-alura-zumbi/releases)
