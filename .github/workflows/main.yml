@@ -3,7 +3,7 @@ name: Build
 on:
  push:
    tags:
-     - '*'
+     - 'v*'
  workflow_dispatch:
    branches:
      - main
@@ -21,11 +21,14 @@ jobs:
           - 2022.3.10f1
         targetPlatform:
           - WebGL
+          - StandaloneLinux64
+          - StandaloneWindows
+          - StandaloneOSX
     steps:
 
       # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           lfs: true
           path: .
@@ -40,14 +43,47 @@ jobs:
 
       # Build
       - name: Build project
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
 
-      - name: Deploy 🚀
+      - if: matrix.targetPlatform == 'WebGL'
+        name: Deploy Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build/${{ matrix.targetPlatform }}/WebGL # The folder the action should deploy.
+
+      - name: Deploy Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
+
+      # Release    
+      - name: Create Release Folder
+        run: |
+          mkdir -p ${{ matrix.targetPlatform }}
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-${{ matrix.targetPlatform }}
+          path: ${{ matrix.targetPlatform }}
+
+      - name: Zip Files
+        run: |
+          ls -lha
+          zip -r ${{ matrix.targetPlatform }}.zip ${{ matrix.targetPlatform }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          # Identify if this is a pre release by checking if the tag name contains -rc, -b, -a
+          # prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-b') || contains(github.ref, '-a') }}
+          files: ${{ matrix.targetPlatform }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
