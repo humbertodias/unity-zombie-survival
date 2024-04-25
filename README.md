@@ -1,6 +1,6 @@
-# Unity-alura-zumbi
+# Zumbie Survival
 
-Zombie survival game for the web
+Zombie survival game for the web using Unity 2022.3.23f
 
 ### How to play
 
