@@ -7,8 +7,7 @@ on:
  workflow_dispatch:
    branches:
      - main
-  
-  
+     
 jobs:
   build:
     name: Build - ${{ matrix.targetPlatform }} - Unity ${{ matrix.unityVersion }}
@@ -18,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         unityVersion:
-          - 2022.3.10f1
+          - 2022.3.25f1
         targetPlatform:
           - WebGL
     steps:
@@ -27,8 +26,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           lfs: true
-          path: .
     
       # Cache
       - uses: actions/cache@v3
@@ -46,7 +45,14 @@ jobs:
         with:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
+      
+      # Output
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Build
+          path: build
 
+      # Pages
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
