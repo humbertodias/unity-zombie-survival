@@ -1,4 +1,4 @@
-# Zumbie Survival
+# Zombie Survival
 
 Zombie survival game for the web using Unity 2022.3.23f
 
@@ -9,4 +9,4 @@ Zombie survival game for the web using Unity 2022.3.23f
 | Shot     | Mouse Left |
 | Movement | WASD       |
 
-[Play](http://humbertodias.github.io/unity-alura-zumbi) | [Releases](https://github.com/humbertodias/unity-alura-zumbi/releases)
+[Play](http://humbertodias.github.io/unity-alura-zumbi)
